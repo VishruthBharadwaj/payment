@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Payment </title>
+</head>
+<body>
+    <h2>If amount is more than 1000,Better use Paypal</h2>
+<nav class="navbar navbar-light bg-dark">
+  <a class="navbar-brand" href="form.html" target="_blank">
+    
+  </a>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class = "col-lg-6"
+		<img src = "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg?webp=true&quality=90&resize=500%2C454" class="img-fluid">
+	</div>
+	<form action="charge" method="POST" id="paypal-button"  >
+
+			<input class="form-control" placeholder="CreditCardNumber" type="number" required>
+			<input class="form-control" placeholder="Card Holder" type="name" required>
+			<input class="form-control" placeholder="ExpirationDate" type="date" required>
+			<input class="form-control" placeholder="Amount" type="number" step=".01" required>
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="rzp_test_LXZbf5QmXLLIq2"
+            data-amount="100"
+            data-name="Daft Punk"
+            data-description="Purchase Description"
+            data-image="vk.jpg"
+            data-netbanking="true"
+            data-description="Tron Legacy"
+            data-prefill.name="Vishruth"
+            data-prefill.email="koolvishruth@gmail.com"
+            data-prefill.contact="9999999999"
+            data-notes.shopping_order_id="1">
+        </script>
+        <input type="hidden" name="shopping_order_id" value="1">
+
+
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5000/payment';
+    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5000/execute';
+
+    paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox'
+
+        commit: true, // Show a 'Razopay' button
+
+        payment: function() {
+            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                return data.paymentID;
+            });
+        },
+
+        onAuthorize: function(data) {
+            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                paymentID: data.paymentID,
+                payerID:   data.payerID
+            }).then(function(res) {
+
+                console.log(res.success)
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+            });
+        }
+
+    }, '#paypal-button');
+</script>
+        </form>
+        
