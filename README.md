@@ -1,9 +1,9 @@
-Payment test App for Python
+# Payment test App for Python
 
-Sample App for Razorpay Python Integration
+# Sample App for Razorpay Paypal Python Integration
 
 
-Steps for Integration
+Steps for Integration:
 
 pip install flask
 
